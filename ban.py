@@ -48,25 +48,25 @@ logging.basicConfig(level=logging.INFO)
 
 print("Starting.....")
 
-Riz = TelegramClient('Riz', Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
+kaneki = TelegramClient('kaneki', Var.API_ID, Var.API_HASH).start(bot_token=Var.BOT_TOKEN)
 
 
 SUDO_USERS = []
 for x in Var.SUDO: 
     SUDO_USERS.append(x)
 
-@Riz.on(events.NewMessage(pattern="^/ping"))  
+@OgKaneki.on(events.NewMessage(pattern="^/ping"))  
 async def ping(e):
     if e.sender_id in SUDO_USERS:
         start = datetime.now()
-        text = "Pong!"
+        text = "pong🥀!"
         event = await e.reply(text, parse_mode=None, link_preview=None )
         end = datetime.now()
         ms = (end-start).microseconds / 1000
         await event.edit(f"**I'm On** \n\n __Pong__ !! `{ms}` ms")
 
 
-@Riz.on(events.NewMessage(pattern="^/kickall"))
+@OgKaneki.on(events.NewMessage(pattern="^/kickall"))
 async def kickall(event):
    if event.sender_id in SUDO_USERS:
      if not event.is_group:
@@ -76,8 +76,8 @@ async def kickall(event):
          await event.delete()
          RiZ = await event.get_chat()
          RiZoeLop = await event.client.get_me()
-         admin = RiZ.admin_rights
-         creator = RiZ.creator
+         admin = KANEKI.admin_rights
+         creator = KANEKI.creator
          if not admin and not creator:
               return await event.reply("I Don't have sufficient Rights !!")
          RiZoeL = await Riz.send_message(event.chat_id, "**Hello !! I'm Alive**")
@@ -98,7 +98,7 @@ async def kickall(event):
          await RiZoeL.edit(f"**Users Kicked Successfully ! \n\n Kicked:** `{kimk}` \n **Total:** `{all}`")
     
 
-@Riz.on(events.NewMessage(pattern="^/banall"))
+@OgKaneki.on(events.NewMessage(pattern="^/banall"))
 async def banall(event):
    if event.sender_id in SUDO_USERS:
      if not event.is_group:
@@ -106,13 +106,13 @@ async def banall(event):
          await event.reply(Reply)
      else:
          await event.delete()
-         RiZ = await event.get_chat()
-         RiZoeLop = await event.client.get_me()
+         KANEKI = await event.get_chat()
+         KANEKILop = await event.client.get_me()
          admin = RiZ.admin_rights
          creator = RiZ.creator
          if not admin and not creator:
               return await event.reply("I Don't have sufficient Rights !!")
-         RiZoeL = await Riz.send_message(event.chat_id, "**Hello !! I'm Alive**")
+         kanekiL= await kaneki.send_message(event.chat_id, "**Hello !! I'm Alive**")
          admins = await event.client.get_participants(event.chat_id, filter=ChannelParticipantsAdmins)
          admins_id = [i.id for i in admins]
          all = 0
@@ -127,10 +127,10 @@ async def banall(event):
              except Exception as e:
                    print(str(e))
                    await asyncio.sleep(0.1)
-         await RiZoeL.edit(f"**Users Banned Successfully ! \n\n Banned Users:** `{bann}` \n **Total Users:** `{all}`")
+         await kaneki.edit(f"**Users Banned Successfully ! \n\n Banned Users:** `{bann}` \n **Total Users:** `{all}`")
 
     
-@Riz.on(events.NewMessage(pattern="^/unbanall"))
+@OgKaneki.on(events.NewMessage(pattern="^/unbanall"))
 async def unban(event):
    if event.sender_id in SUDO_USERS:
      if not event.is_group:
@@ -153,7 +153,7 @@ async def unban(event):
          await msg.edit("{}: {} unbanned".format(event.chat_id, p))
 
 
-@Riz.on(events.NewMessage(pattern="^/leave"))
+@OgKaneki.on(events.NewMessage(pattern="^/leave"))
 async def _(e):
     if e.sender_id in SUDO_USERS:
         rizoel = ("".join(e.text.split(maxsplit=1)[1:])).split(" ", 1)
@@ -178,7 +178,7 @@ async def _(e):
                 await event.edit(str(e))   
           
 
-@Riz.on(events.NewMessage(pattern="^/restart"))
+@OgKaneki.on(events.NewMessage(pattern="^/restart"))
 async def restart(e):
     if e.sender_id in SUDO_USERS:
         text = "__Restarting__ !!!"
@@ -194,4 +194,4 @@ async def restart(e):
 print("\n\n")
 print("Your Ban All Bot Deployed Successfully ✅")
 
-Riz.run_until_disconnected()
+kaneki.run_until_disconnected()
